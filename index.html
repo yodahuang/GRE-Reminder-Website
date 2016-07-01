@@ -1,0 +1,23 @@
+<!DOCTYPE HTML>
+<html ng-app='wordReminder'>
+	<head>
+		<title>GRE Word Reminder WordList</title>
+	</head>
+	<body>
+		<div ng-controller='listController as ctrl'>
+		<form ng-submit="ctrl.onSubmit">
+			<input type='text' value='New word' placeholder="Add new word">
+			<input type='submit' value="Submit"/>
+		</form>
+		<li ng-repeat='word in ctrl.words'>{{word}}</li>
+	</div>
+		<script src='https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js'></script>
+		<script>
+			angular.module('wordReminder', [])
+			  .controller('TlistController', ['$resource', function($resource) {
+			  	this.words=[];
+			  	
+			  }]);
+		</script>
+	</body>
+</html>
