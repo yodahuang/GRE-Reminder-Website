@@ -40,7 +40,7 @@
 			  .controller('listController', ['$resource', function($resource) {
 				var ctrl = this;
 			  	this.words=[];
-			  	var listResource = $resource('http://gre-reminder-service.herokuapp.com/word');
+			  	var listResource = $resource('https://gre-reminder-service.herokuapp.com/word');
 				var wholeList = listResource.query({all: true}, ()=>this.words=wholeList );
 				function updateList(){
 					let wholeList = listResource.query({all: true}, ()=>ctrl.words=wholeList );
