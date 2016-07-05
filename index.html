@@ -5,18 +5,31 @@
 	</head>
 	<body>
 		<div ng-controller='listController as ctrl'>
-		<form ng-submit="ctrl.onSubmit">
-			<input type='text' value='New word' placeholder="Add new word">
+		<form ng-submit="ctrl.onSubmit()">
+			<input type='text' name='New word' placeholder="Add new word" placeholder="Type new word" ng-model='ctrl.newWord'>
 			<input type='submit' value="Submit"/>
 		</form>
-		<li ng-repeat='word in ctrl.words'>{{word}}</li>
+		<div ng-repeat='word in ctrl.words'>
+			<li>
+				{{word}}
+				<button ng-click='ctrl.onDelete(word)'>Delete</button>
+			</li>
+		</div>
 	</div>
 		<script src='https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js'></script>
+		<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular-resource.js"></script>
 		<script>
-			angular.module('wordReminder', [])
-			  .controller('TlistController', ['$resource', function($resource) {
+			angular.module('wordReminder', ['ngResource'])
+			  .controller('listController', ['$resource', function($resource) {
+				var ctrl = this;
 			  	this.words=[];
-			  	
+			  	var listResource = $resource('http://gre-reminder-service.herokuapp.com/word');
+				var wholeList = listResource.query({all: true}, ()=>this.words=wholeList );
+				function updateList(){
+					let wholeList = listResource.query({all: true}, ()=>ctrl.words=wholeList );
+				}
+				this.onSubmit = ()=>listResource.save({word: ctrl.newWord},{},updateList);
+				this.onDelete = (word)=>listResource.delete({word: word},{},updateList);
 			  }]);
 		</script>
 	</body>
