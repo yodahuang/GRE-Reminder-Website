@@ -6,6 +6,7 @@
 	<body>
 		<div class="mdl-grid" ng-controller='listController as ctrl'>
 			<div class="mdl-cell mdl-cell--6-col mdl-cell--12-col-phone mdl-cell--3-offset-desktop ">
+				<!-- The input field -->
 					<form class='mdl-grid' ng-submit="ctrl.onSubmit()">
 						<div class="mdl-cell mdl-cell--8-col mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
 							<input class="mdl-textfield__input" type="text" id="newWord" pattern="[A-Z,a-z]*" ng-model='ctrl.newWord'>
@@ -18,6 +19,7 @@
 							</button>
 						</div>
 					</form>
+				<!-- Complete word list -->
 				<ul class='mdl-list'>
 					<div ng-repeat='word in ctrl.words track by $index'>
 						<li class="mdl-list__item">
@@ -29,28 +31,22 @@
 					</div>
 				</ul>
 			</div>
-	</div>
+		</div>
+		
+		<!-- FirebaseUI -->
+		<div id="firebaseui-auth-container"></div>
+
+
 		<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 		<link rel="stylesheet" href="https://code.getmdl.io/1.1.3/material.indigo-pink.min.css">
+		
+		<script src="https://www.gstatic.com/firebasejs/3.1.0/firebase.js"></script>
+    	<!--Firebase UI-->
+		<script src="https://www.gstatic.com/firebasejs/ui/live/0.4/firebase-ui-auth.js"></script>
+		<link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/live/0.4/firebase-ui-auth.css" />
+
 		<script defer src="https://code.getmdl.io/1.1.3/material.min.js"></script>
-		<script src='https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js'></script>
-		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular-resource.js"></script>
-		<script>
-			angular.module('wordReminder', ['ngResource'])
-			  .controller('listController', ['$resource', function($resource) {
-				var ctrl = this;
-			  	this.words=[];
-			  	var listResource = $resource('https://gre-reminder-service.herokuapp.com/word');
-				var wholeList = listResource.query({all: true}, ()=>this.words=wholeList );
-				function updateList(){
-					let wholeList = listResource.query({all: true}, ()=>ctrl.words=wholeList );
-				}
-				this.onSubmit = ()=>listResource.save({word: ctrl.newWord},{},()=>{
-					ctrl.newWord='';
-					updateList();
-				});
-				this.onDelete = (word)=>listResource.delete({word: word},{},updateList);
-			  }]);
-		</script>
+
+		<script src="./dest/index.js"></script>
 	</body>
 </html>
