@@ -5,8 +5,12 @@ var tap = require('gulp-tap');
 var buffer = require('gulp-buffer');
 var sourcemaps = require('gulp-sourcemaps');
 var uglify = require('gulp-uglify');
+var ghPages = require('gulp-gh-pages');
 
 gulp.task('default', function () {
+
+  gulp.src('src/html/*')
+    .pipe(gulp.dest('dist'))
 
   return gulp.src('src/js/index.js', {read: false}) // no need of reading file because browserify does.
 
@@ -31,6 +35,11 @@ gulp.task('default', function () {
     // write sourcemaps
     .pipe(sourcemaps.write('./'))
 
-    .pipe(gulp.dest('dest'));
+    .pipe(gulp.dest('dist'));
 
+});
+
+gulp.task('deploy', function() {
+  return gulp.src('./dist/**/*')
+    .pipe(ghPages());
 });
