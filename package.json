@@ -24,6 +24,8 @@
     "gulp-uglify": "^1.5.4",
     "gulp-util": "^3.0.7",
     "gulp-watch": "^4.3.8",
+    "lodash.assign": "^4.0.9",
+    "vinyl-source-stream": "^1.1.0",
     "watchify": "^3.7.0"
   },
   "babel": {
@@ -32,6 +34,7 @@
     ]
   },
   "scripts": {
+    "watch": "watchify src/js/index.js -o src/js/bundle.js & gulp brower-sync",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
