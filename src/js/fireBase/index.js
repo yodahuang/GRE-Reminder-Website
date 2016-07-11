@@ -1,4 +1,3 @@
-console.log("In fireBase");
 // Initialize Firebase
 var config = {
     apiKey: "AIzaSyBeN8cP13CXwWthtYeWBAYKsbGM_u182cw",
@@ -8,4 +7,4 @@ var config = {
 };
 firebase.initializeApp(config);
 
-require('./auth');
+module.exports = firebase;
