@@ -1,10 +1,10 @@
 'use strict';
 var myFireBase = require('../../fireBase/index');
 
-module.exports = ['$firebaseArray', function($firebaseArray) {
+module.exports = ['$firebaseArray', '$rootScope', function($firebaseArray, $rootScope) {
 	componentHandler.upgradeAllRegistered();
 	var ctrl = this;
-	var ref = myFireBase.database().ref();
+	var ref = myFireBase.database().ref().child($rootScope.uid);
 	this.words = $firebaseArray(ref);
 	this.onSubmit = ()=>{
 		ctrl.words.$add(ctrl.newWord);
