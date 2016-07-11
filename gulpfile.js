@@ -7,6 +7,7 @@ var sourcemaps = require('gulp-sourcemaps');
 var uglify = require('gulp-uglify');
 var ghPages = require('gulp-gh-pages');
 var browserSync = require('browser-sync').create();
+var rename = require("gulp-rename");
 
 gulp.task('browser-sync', function() {
 	gutil.log('Browser Sync!');
@@ -18,8 +19,10 @@ gulp.task('browser-sync', function() {
 });
 
 gulp.task('release', function () {
-	gulp.src('src/html/*')
-    	.pipe(gulp.dest('dist'))
+	gulp.src('src/index.html')
+		.pipe(gulp.dest('dist'));
+	gulp.src('src/html/**/*')
+    	.pipe(gulp.dest('dist/html'));
   	return gulp.src('src/js/index.js', {read: false})
     	.pipe(tap(function (file) {
       		gutil.log('bundling ' + file.path);
@@ -29,7 +32,8 @@ gulp.task('release', function () {
     	.pipe(sourcemaps.init({loadMaps: true}))
     	.pipe(uglify())
     	.pipe(sourcemaps.write('./'))
-    	.pipe(gulp.dest('dist'));
+		.pipe(rename('bundle.js'))
+    	.pipe(gulp.dest('dist/js'));
 });
 
 gulp.task('deploy', function() {
